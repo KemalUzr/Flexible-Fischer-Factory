@@ -1,4 +1,5 @@
 # FlexibleFischerFactory
+![alt text](https://github.com/KemalUzr/FlexibleFischerFactory/blob/master/.github/group.jpg)
 - [Monitor App](#monitor-app)
   - [Setup development environment](#setup-development-environment)
   - [Linting](#linting)
