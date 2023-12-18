@@ -1,0 +1,16 @@
+{
+    "name": "core",
+    "rootNamespace": "FlexibleFischerFactory.Core",
+    "references": [
+        "GUID:b1c11185df36c5893950089b9467a83b"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

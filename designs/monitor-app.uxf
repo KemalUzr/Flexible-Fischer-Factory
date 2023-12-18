@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="15.1">
+  <zoom_level>8</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1440</x>
+      <y>368</y>
+      <w>248</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>MessageHandler
+--
+-topicHandlers: ITopicHandler[]
+--
++MessageHandler(handlers: ITopicHandler[])
++handleEvent(topic: string, message: string)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1608</x>
+      <y>752</y>
+      <w>320</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>IHandler
+--
++handleEvent(topic?: string, message?: string, error?: string)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1488</x>
+      <y>80</y>
+      <w>248</w>
+      <h>136</h>
+    </coordinates>
+    <panel_attributes>MqttConnection
+--
+-mqttClient: mqtt.Client
+--
++MqttConnection(server: string, port: int)
++subscribe(topic: string)
++publish(topic: string, message: string)
++onMessage(handler: IHandler)
++onConnect(handler: IHandler)
++onDisconnect(handler: IHandler)
++onError(handler: IHandler)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1248</x>
+      <y>752</y>
+      <w>144</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>ITopicHandler
+--
++handleTopic(data: string)
++topicToHandle(): string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1320</x>
+      <y>432</y>
+      <w>224</w>
+      <h>360</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;420.0;260.0;420.0;260.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>896</x>
+      <y>392</y>
+      <w>192</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>OvenTopicHandler
+--
+-startTime: Date
+-lastState: boolean
+--
++handleTopic(data: string)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>2328</x>
+      <y>384</y>
+      <w>240</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>this.topicHandlers.forEach(handler =&gt; {
+    if (handler.topicToHandle() == topic) {
+        handler.handleTopic();
+    }
+});</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1672</x>
+      <y>416</y>
+      <w>672</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=.
+</panel_attributes>
+    <additional_attributes>10.0;20.0;820.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>232</x>
+      <y>640</y>
+      <w>112</w>
+      <h>24</h>
+    </coordinates>
+    <panel_attributes>return this.topic;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>0</x>
+      <y>304</y>
+      <w>352</w>
+      <h>264</h>
+    </coordinates>
+    <panel_attributes>const json = JSON.parse(data);
+
+const time = Date.parse(json.ts);
+
+if(isNaN(time)) {
+    console.log('Invalid time received from oven');
+    return;
+}
+
+if(json.code == 1) {
+    this.startTime = new Date(time);
+}
+
+if(json.code == 2) {
+    const endTime = new Date(time);
+    const timeDiff = endTime.getTime() - this.startTime.getTime();
+    console.log(timeDiff);
+    this.client.publish('oven/time', timeDiff.toString());
+}</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>336</x>
+      <y>616</y>
+      <w>608</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>lt=.
+</panel_attributes>
+    <additional_attributes>740.0;10.0;720.0;10.0;720.0;50.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>344</x>
+      <y>440</y>
+      <w>568</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=.
+</panel_attributes>
+    <additional_attributes>690.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1128</x>
+      <y>104</y>
+      <w>224</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>Applicatie
+--
++mqttConnection: MqttConnection
+--
++main()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1344</x>
+      <y>136</y>
+      <w>160</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;180.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1288</x>
+      <y>152</y>
+      <w>304</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;150.0;350.0;150.0;350.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>712</x>
+      <y>88</y>
+      <w>320</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>const ip = `192.168.0.10`;
+const port = 1883;
+
+const mqttConnection = new MqttConnection(ip, port);
+
+const messageHandler = new MessageHandler([
+    new OvenTopicHandler('f/i/state/mpo', mqttConnection),
+]);
+
+const connectedHandler = new ConnectedHandler();
+
+mqttConnection.onConnect(connectedHandler);
+mqttConnection.onMessage(messageHandler);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1024</x>
+      <y>136</y>
+      <w>120</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=.
+</panel_attributes>
+    <additional_attributes>10.0;20.0;130.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>1312</x>
+      <y>568</y>
+      <w>96</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>IMqttConnection
+--
++subscribe()
++publish</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>768</x>
+      <y>704</y>
+      <w>1200</w>
+      <h>176</h>
+    </coordinates>
+    <panel_attributes>Domainlayer
+bg=green
+layer=-1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>1064</x>
+      <y>32</y>
+      <w>776</w>
+      <h>256</h>
+    </coordinates>
+    <panel_attributes>PresentationLayer
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLPackage</id>
+    <coordinates>
+      <x>384</x>
+      <y>296</y>
+      <w>1848</w>
+      <h>400</h>
+    </coordinates>
+    <panel_attributes>DomainImpl. layer
+bg=red
+layer=-2</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1600</x>
+      <y>432</y>
+      <w>176</w>
+      <h>352</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>200.0;420.0;10.0;420.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1360</x>
+      <y>192</y>
+      <w>144</w>
+      <h>408</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;490.0;50.0;490.0;50.0;10.0;160.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>928</x>
+      <y>552</y>
+      <w>312</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>/BaseTopicHandler/
+--
+-topic: string
+#client: IMqttConnection
+#storagePlaces: IStorage[]
+--
++BaseTopicHandler(topic: string, client: IMqttConnection)
++topicToHandle(): string
+/+handleTopic(data: string)/
+
+
+layer=1</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1232</x>
+      <y>576</y>
+      <w>136</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=1</panel_attributes>
+    <additional_attributes>150.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>656</y>
+      <w>208</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>240.0;140.0;10.0;140.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1016</x>
+      <y>456</y>
+      <w>24</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>40</x>
+      <y>584</y>
+      <w>184</w>
+      <h>64</h>
+    </coordinates>
+    <panel_attributes>this.topic = topic;
+this.client = client;
+
+this.client.subscribe(this.topic);</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>216</x>
+      <y>592</y>
+      <w>728</w>
+      <h>32</h>
+    </coordinates>
+    <panel_attributes>lt=.
+</panel_attributes>
+    <additional_attributes>890.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1704</x>
+      <y>368</y>
+      <w>312</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>ErrorHandler
+--
+--
++handleEvent(topic: string, message: string, error: Error)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2024</x>
+      <y>368</y>
+      <w>128</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>ConnectedHandler
+--
+--
++handleEvent()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1304</x>
+      <y>152</y>
+      <w>576</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0;690.0;130.0;690.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1328</x>
+      <y>152</y>
+      <w>792</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+m2=1</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0;960.0;110.0;960.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1768</x>
+      <y>408</y>
+      <w>104</w>
+      <h>376</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;450.0;110.0;450.0;110.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1768</x>
+      <y>408</y>
+      <w>336</w>
+      <h>376</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>10.0;450.0;400.0;450.0;400.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLInterface</id>
+    <coordinates>
+      <x>792</x>
+      <y>744</y>
+      <w>112</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>IStorage
+--
++store(data: string)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>848</x>
+      <y>656</y>
+      <w>224</w>
+      <h>128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+m1=0..n</panel_attributes>
+    <additional_attributes>10.0;130.0;260.0;130.0;260.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>504</x>
+      <y>488</y>
+      <w>112</w>
+      <h>48</h>
+    </coordinates>
+    <panel_attributes>ConsoleStorage
+--
+--
++store(data:string)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>656</x>
+      <y>480</y>
+      <w>160</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>FileStorage
+--
+-filename: string
+--
++FileStorage(filename: string)
++store(data: string)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>728</x>
+      <y>544</y>
+      <w>128</w>
+      <h>232</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>140.0;270.0;10.0;270.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>552</x>
+      <y>528</y>
+      <w>304</w>
+      <h>248</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>360.0;290.0;10.0;290.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1120</x>
+      <y>392</y>
+      <w>192</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>SawTopicHandler
+--
+-startTime: Date
+-lastState: boolean
+--
++handleTopic(data: string)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1160</x>
+      <y>456</y>
+      <w>24</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
+  </element>
+</diagram>

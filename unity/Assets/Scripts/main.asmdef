@@ -1,0 +1,17 @@
+{
+    "name": "main",
+    "rootNamespace": "FlexibleFischerFactory",
+    "references": [
+        "GUID:db53551f8ac65a8be97e7037ed03a833",
+        "GUID:572b2f7c53bb27982b2d1ebd30b9eb69"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

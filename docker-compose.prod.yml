@@ -1,0 +1,13 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: monitoring-app
+    image: flexiblefischerfactory/monitor-app:latest
+    restart: always
+    networks:
+      - monitoring
+
+networks:
+  monitoring:
+    name: monitoring

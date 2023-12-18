@@ -1,0 +1,11 @@
+# Docker files
+.dockerignore
+Dockerfile
+
+# Node files
+node_modules
+
+# Config files
+.eslintignore
+.eslintrc.yml
+jest.config.js
