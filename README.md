@@ -1,7 +1,4 @@
 # FlexibleFischerFactory
-
-![group](https://github.com/RemanufacturingLab-StudentTeams/FlexibleFischerFactory/assets/58851866/f0594b9f-f6d6-4190-a463-d955f7c616eb)
-
 - [Monitor App](#monitor-app)
   - [Setup development environment](#setup-development-environment)
   - [Linting](#linting)
